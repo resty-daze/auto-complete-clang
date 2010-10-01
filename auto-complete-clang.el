@@ -43,7 +43,7 @@
          (cmd      (list clang-executable "-cc1"
                          filename "-fsyntax-only" "-code-completion-at"
                          (format "%s:%s:%s" filename row col))))
-    
+
     ;; eval the config file under buffer locations
     (let* ((filedir  (file-name-directory filename))
            (config-filename (concat filedir ".clang-completion-config.el")))
@@ -51,7 +51,7 @@
         (with-temp-buffer
           (insert-file-contents config-filename)
           (eval-buffer))))
-    
+
     (when (listp clang-completion-flags)
       (setq cmd (append cmd clang-completion-flags)))
     (when (stringp clang-completion-pch)
@@ -90,7 +90,7 @@
   (while (re-search-backward "\\[#.*?::#\\]" nil t)
     (replace-match ""))
   (goto-char (point-max))
-  
+
   (while (re-search-backward "\\[#\\|#\\]" nil t)
     (replace-match " "))
   (goto-char (point-max))
@@ -115,14 +115,14 @@
       (filter-doc-buffer)
 
       (message (buffer-string))))
-    ;;(with-temp-buffer
-    ;;  (dolist (proto reslist)
-    ;;    (insert proto)
-    ;;    (insert "\n\n"))
-    ;;  (filter-doc-buffer)
-    ;;  (buffer-string))
-    ;; display nothing
-      (return nil))
+  ;;(with-temp-buffer
+  ;;  (dolist (proto reslist)
+  ;;    (insert proto)
+  ;;    (insert "\n\n"))
+  ;;  (filter-doc-buffer)
+  ;;  (buffer-string))
+  ;; display nothing
+  (return nil))
 
 (defvar ac-source-clang-complete
   '((candidates . (clang-get-completions nil ac-point))
@@ -141,7 +141,7 @@
 ;;    (cache)))
 
 (defun ac-complete-clang ()
-  (interactive)    
+  (interactive)
   (auto-complete '(ac-source-clang-complete)))
 
 (provide 'auto-complete-clang)
