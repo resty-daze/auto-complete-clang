@@ -24,10 +24,13 @@
   (with-output-to-string
     (with-current-buffer standard-output
       (unless (eq (apply 'call-process (car command) nil '(t ".clang-completion-error") nil (cdr command)) 0)
-        (compile "cat .clang-completion-error")))))
+        (let ((last-command compile-command))
+          (compile "cat .clang-completion-error")
+          (setq compile-command last-command))))))
 
 (defun clang-parse-completion-line (line)
-  (cond ((string-match "^COMPLETION: \\([^ ]*\\)\\(?: : \\([^\"]*\\)\\)$" line)
+  (cond ((string-match "^COMPLETION: Pattern" line) nil)  ;; exclude patterns
+        ((string-match "^COMPLETION: \\([^ ]*\\)\\(?: : \\([^\"]*\\)\\)$" line)
          (list (match-string 1 line) (match-string 2 line)))
         ((string-match "^OVERRIDE:  \\([^ ]*\\)\\(?: : \\([^\"]*\\)\\)$" line)
          (list (match-string 1 line) (match-string 2 line)))
