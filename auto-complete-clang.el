@@ -19,11 +19,12 @@
 ;; extra flags
 (defvar clang-completion-pch nil)
 (defvar clang-completion-flags nil)
+(defvar clang-completion-suppress-error nil)
 
 (defun clang-process-exec (command)
   (with-output-to-string
     (with-current-buffer standard-output
-      (unless (eq (apply 'call-process (car command) nil '(t ".clang-completion-error") nil (cdr command)) 0)
+      (unless (or (eq (apply 'call-process (car command) nil '(t ".clang-completion-error") nil (cdr command)) 0) clang-completion-suppress-error)
         (let ((last-command compile-command))
           (compile "cat .clang-completion-error")
           (setq compile-command last-command))))))

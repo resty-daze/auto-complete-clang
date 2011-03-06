@@ -1,4 +1,5 @@
 (require 'auto-complete-clang)
+(setq clang-completion-suppress-error 't)
 
 (defun my-c-mode-common-hook()
   (setq ac-auto-start nil)
