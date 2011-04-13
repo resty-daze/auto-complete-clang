@@ -47,6 +47,7 @@
   "Get clang options for current file"
   (save-excursion
     (let ((cur-options-list '("")) (file-name (buffer-file-name)))
+      ;; This regex sucks, fix me
       (while (re-search-forward "@clang:[[:space:]]*\\(-[^[:space:]]+\\)" nil t nil)
         (setq cur-options-list
               (cons (match-string-no-properties 1)
