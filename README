@@ -24,6 +24,7 @@ Additional clang Options for source file and directory
 =======================================
 
 There are 2 ways to add additional clang options when doing completion:
+
 1. Add "Magic comments" in source files in which clang auto-complete is supposed to run, for example:
     /* @clang:-iquote../include /*
 2. Put options in a file located in source file's directory or several level of its parent directories (configurable, default is 3 levels). The default name is clangOptions. For example:
@@ -31,6 +32,11 @@ There are 2 ways to add additional clang options when doing completion:
     -iquote/xxx/xxx/xxx
 
 If both clangOptions and "magic comments" exist, they will be concatenated and passed to clang. 
+
+Comments:
+==========
+
+The option adding part is still very buggy and needs some love. Please feel free to help :)
 
 Author
 ======
