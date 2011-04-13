@@ -20,8 +20,21 @@ Put the ``auto-complete-clang.el`` file under the ``load-path``, so that Emacs w
 
 A sample configure file for c-basic-mode is given, please refer to ``sample-config.el``.
 
+Additional clang Options for source file and directory
+=======================================
+
+There are 2 ways to add additional clang options when doing completion:
+1. Add "Magic comments" in source files in which clang auto-complete is supposed to run, for example:
+    /* @clang:-iquote../include /*
+2. Put options in a file located in source file's directory or several level of its parent directories (configurable, default is 3 levels). The default name is clangOptions. For example:
+    If the source fie is in $DIR/src, then we might have $DIR/clangOptions with content:
+    -iquote/xxx/xxx/xxx
+
+If both clangOptions and "magic comments" exist, they will be concatenated and passed to clang. 
+
 Author
 ======
 
 Mike Qin <mikeandmore@gmail.com>
+Xu  Yecheng <xyc0562@gmail.com>
 
