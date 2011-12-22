@@ -33,6 +33,11 @@ There are 2 ways to add additional clang options when doing completion:
 
 If both clangOptions and "magic comments" exist, they will be concatenated and passed to clang. 
 
+Using in Linux:
+=============================
+If you want add gcc includes paths to clang when clang couldn't get them itself, add following line into your .emacs file:
+   (setq clang-completion-flags (clang-get-gcc-include-flags))
+
 Comments:
 ==========
 

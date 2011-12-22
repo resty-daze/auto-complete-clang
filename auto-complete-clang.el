@@ -21,6 +21,23 @@
 (defvar clang-completion-flags nil)
 (defvar clang-completion-suppress-error nil)
 
+(defun clang-get-gcc-include-flags()
+  "Get GCC include paths for clang"
+  (let ((lines (split-string (clang-process-exec '("sh" "-c" 
+                                                   "LANG=C gcc -v -x c++ /dev/null -fsyntax-only 2>&1")) 
+                             "\n"))
+        (include-option `()))
+    (while (and lines 
+                (not (string-match "#include <...> search starts here:" (car lines))))
+      (setq lines (cdr lines)))
+    (setq lines (cdr lines))
+    (while (and lines 
+                (not (string-match "End of search list" (car lines))))
+      (add-to-list 'include-option (concat "-I" (car (split-string (car lines) " " t))))
+      (setq lines (cdr lines)))
+    include-option))
+
+
 (defun clang-process-exec (command)
   (with-output-to-string
     (with-current-buffer standard-output
